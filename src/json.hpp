@@ -16,6 +16,7 @@ Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 #include <cassert>
 #include <ciso646>
 #include <cmath>
+#include <codecvt>
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
@@ -25,6 +26,7 @@ Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 #include <iostream>
 #include <iterator>
 #include <limits>
+#include <locale>
 #include <map>
 #include <memory>
 #include <sstream>
@@ -5620,6 +5622,16 @@ class basic_json
     static basic_json parse(const string_t& s, parser_callback_t cb = nullptr)
     {
         return parser(s, cb).parse();
+    }
+
+    /*!
+    @copydoc parse(const string_t&, parser_callback_t)
+    */
+    static basic_json parse(const std::wstring& s, parser_callback_t cb = nullptr)
+    {
+        // convert wide string to narrow string
+        // from http://stackoverflow.com/a/18597384/266378
+        return parse(std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>>().to_bytes(s), cb);
     }
 
     /*!

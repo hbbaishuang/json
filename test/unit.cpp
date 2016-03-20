@@ -12345,5 +12345,26 @@ TEST_CASE("regression tests")
         j_long_double = 1.23e45L;
         CHECK(j_long_double.get<long double>() == 1.23e45L);
     }
+
+    SECTION("issue #216 wide strings not supported")
+    {
+        std::wstring widestring = LR"({
+          "pi": 3.141,
+          "happy": true,
+          "name": "Niels",
+          "nothing": null,
+          "answer": {
+            "everything": 42
+          },
+          "list": [1, 0, 2],
+          "object": {
+            "currency": "USD",
+            "value": 42.99
+          }
+        })";
+
+        json j = json::parse(widestring);
+        CHECK(j["name"] == "Niels");
+    }
 }
 
