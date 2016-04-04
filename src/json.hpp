@@ -239,7 +239,7 @@ class basic_json
 
 
     ///////////////////////////
-    // JSON value data types //
+    // JSON value data type//
     ///////////////////////////
 
     /// @name JSON value data types
